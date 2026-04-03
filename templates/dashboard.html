@@ -1,0 +1,97 @@
+{% extends "base.html" %}
+{% block title %}Dashboard{% endblock %}
+
+{% block content %}
+<div class="page-header">
+  <div>
+    <h1 class="page-title">Dashboard</h1>
+    <p class="page-subtitle">Live overview of your food rescue impact</p>
+  </div>
+</div>
+
+<!-- ── IMPACT STATS ── -->
+<div class="stats-grid">
+  <div class="stat-card stat-green">
+    <div class="stat-icon">🌱</div>
+    <div class="stat-num" data-count="{{ meals }}">{{ meals }}</div>
+    <div class="stat-label">Meals Saved</div>
+  </div>
+  <div class="stat-card stat-amber">
+    <div class="stat-icon">📦</div>
+    <div class="stat-num">{{ foods | length }}</div>
+    <div class="stat-label">Available Donations</div>
+  </div>
+  <div class="stat-card stat-blue">
+    <div class="stat-icon">🙋</div>
+    <div class="stat-num">{{ volunteers | length }}</div>
+    <div class="stat-label">Active Volunteers</div>
+  </div>
+  <div class="stat-card stat-earth">
+    <div class="stat-icon">⭐</div>
+    <div class="stat-num">{% if volunteers %}{{ volunteers[0][2] }}{% else %}0{% endif %}</div>
+    <div class="stat-label">Top Points</div>
+  </div>
+</div>
+
+<!-- ── TWO COLUMN ── -->
+<div class="dashboard-cols">
+
+  <!-- Recent Food -->
+  <section class="card">
+    <div class="card-header">
+      <h2 class="card-title">Recent Donations</h2>
+      <a href="/donate" class="card-link">+ Add →</a>
+    </div>
+    {% if foods %}
+    <div class="mini-list">
+      {% for food in foods[:5] %}
+      <div class="mini-row">
+        <div class="mini-dot" style="background:var(--sage)"></div>
+        <div class="mini-info">
+          <div class="mini-name">{{ food[2] }}</div>
+          <div class="mini-meta">{{ food[1] }} · {{ food[4] }}</div>
+        </div>
+        <div class="mini-badge">{{ food[3] }}</div>
+      </div>
+      {% endfor %}
+    </div>
+    {% else %}
+    <div class="empty-state">
+      <span>🌾</span><p>No donations yet</p>
+    </div>
+    {% endif %}
+  </section>
+
+  <!-- Leaderboard -->
+  <section class="card">
+    <div class="card-header">
+      <h2 class="card-title">Leaderboard</h2>
+      <a href="/volunteers" class="card-link">View all →</a>
+    </div>
+    {% if volunteers %}
+    <div class="mini-list">
+      {% for v in volunteers[:5] %}
+      <div class="mini-row">
+        <div class="rank-num">
+          {% if loop.index == 1 %}🥇
+          {% elif loop.index == 2 %}🥈
+          {% elif loop.index == 3 %}🥉
+          {% else %}{{ loop.index }}
+          {% endif %}
+        </div>
+        <div class="mini-info">
+          <div class="mini-name">{{ v[1] }}</div>
+        </div>
+        <div class="pts-chip">{{ v[2] }} pts</div>
+      </div>
+      {% endfor %}
+    </div>
+    {% else %}
+    <div class="empty-state">
+      <span>🙌</span><p>No volunteers yet</p>
+    </div>
+    {% endif %}
+  </section>
+
+</div>
+{% endblock %}

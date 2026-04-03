@@ -1,0 +1,95 @@
+{% extends "base.html" %}
+{% block title %}Rewards{% endblock %}
+
+{% block content %}
+<div class="page-header">
+  <div>
+    <h1 class="page-title">Rewards Catalog</h1>
+    <p class="page-subtitle">Redeem your points for real-world treats</p>
+  </div>
+</div>
+
+<!-- Voucher cards -->
+<div class="voucher-grid">
+
+  <div class="voucher-card">
+    <div class="voucher-img-wrap">
+      <img
+        src="https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?w=400&q=80&auto=format&fit=crop"
+        alt="Coffee voucher"
+        class="voucher-img"
+        onerror="this.src='';this.parentElement.innerHTML='☕';"
+      >
+      <span class="voucher-cost-tag">50 pts</span>
+    </div>
+    <div class="voucher-info">
+      <div class="voucher-name">Coffee Voucher</div>
+      <div class="voucher-desc">One free specialty coffee at any partner café</div>
+    </div>
+  </div>
+
+  <div class="voucher-card">
+    <div class="voucher-img-wrap">
+      <img
+        src="https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=400&q=80&auto=format&fit=crop"
+        alt="Free meal coupon"
+        class="voucher-img"
+        onerror="this.src='';this.parentElement.innerHTML='🍔';"
+      >
+      <span class="voucher-cost-tag">100 pts</span>
+    </div>
+    <div class="voucher-info">
+      <div class="voucher-name">Free Meal Coupon</div>
+      <div class="voucher-desc">Enjoy a full meal at a participating restaurant</div>
+    </div>
+  </div>
+
+  <div class="voucher-card">
+    <div class="voucher-img-wrap">
+      <img
+        src="https://images.unsplash.com/photo-1618354691373-d851c5c3a990?w=400&q=80&auto=format&fit=crop"
+        alt="Eco hero badge"
+        class="voucher-img"
+        onerror="this.src='';this.parentElement.innerHTML='🏅';"
+      >
+      <span class="voucher-cost-tag">150 pts</span>
+    </div>
+    <div class="voucher-info">
+      <div class="voucher-name">Eco Hero Badge</div>
+      <div class="voucher-desc">Official recognition as a top food rescue volunteer</div>
+    </div>
+  </div>
+
+</div>
+
+<!-- Redeem section -->
+<section class="card" style="margin-top:32px;">
+  <div class="card-header">
+    <h2 class="card-title">Redeem a Voucher (50 pts)</h2>
+  </div>
+  <p style="font-size:13px;color:var(--mid-gray);margin-bottom:18px;">
+    Select your name below to redeem 50 points for the Coffee Voucher.
+    Volunteers whose points reach 0 after redemption are removed from the board.
+  </p>
+  {% if volunteers %}
+  <div class="redeem-list">
+    {% for v in volunteers %}
+    <div class="redeem-row">
+      <span class="vol-name-cell">{{ v[1] }}</span>
+      <span class="pts-chip">{{ v[2] }} pts</span>
+      {% if v[2] >= 50 %}
+      <a href="/redeem/{{ v[0] }}" class="btn btn-primary btn-sm">🎟 Redeem 50 pts</a>
+      {% else %}
+      <span class="not-enough">Need {{ 50 - v[2] }} more pts</span>
+      {% endif %}
+    </div>
+    {% endfor %}
+  </div>
+  {% else %}
+  <div class="empty-state">
+    <span>🎁</span>
+    <p>No volunteers to redeem. <a href="/volunteers">Register one first.</a></p>
+  </div>
+  {% endif %}
+</section>
+{% endblock %}

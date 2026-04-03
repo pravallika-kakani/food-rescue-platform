@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+{% block title %}Claim Food{% endblock %}
+
+{% block content %}
+<div class="page-header">
+  <div>
+    <h1 class="page-title">Available Food</h1>
+    <p class="page-subtitle">Claim a donation and earn 10 reward points</p>
+  </div>
+</div>
+
+{% if foods %}
+<div class="food-grid">
+  {% for food in foods %}
+  <div class="food-card">
+    <div class="food-card-accent"></div>
+    <div class="food-card-body">
+      <div class="food-name">{{ food[2] }}</div>
+      <span class="qty-badge">{{ food[3] }}</span>
+      <div class="food-meta-row">
+        <span class="food-meta-item">🏪 {{ food[1] }}</span>
+        <span class="food-meta-item">📍 {{ food[4] }}</span>
+      </div>
+      <form action="/claim" method="POST" class="claim-form">
+        <input type="hidden" name="food_id" value="{{ food[0] }}">
+        {% if volunteers %}
+        <select name="volunteer_id" required>
+          <option value="" disabled selected>Select volunteer</option>
+          {% for v in volunteers %}
+          <option value="{{ v[0] }}">{{ v[1] }} ({{ v[2] }} pts)</option>
+          {% endfor %}
+        </select>
+        <button type="submit" class="btn btn-claim">Claim +10pts →</button>
+        {% else %}
+        <div class="no-vol-warn">⚠ Register a volunteer first</div>
+        {% endif %}
+      </form>
+    </div>
+  </div>
+  {% endfor %}
+</div>
+
+{% else %}
+<div class="empty-full">
+  <div class="empty-icon-lg">🌾</div>
+  <h3>No food available right now</h3>
+  <p>Check back soon, or <a href="/donate">donate surplus food</a>.</p>
+</div>
+{% endif %}
+{% endblock %}

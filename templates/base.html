@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{% block title %}Food Rescue{% endblock %} — Food Rescue Platform</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,600;1,9..144,300&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+
+  <!-- ── SIDEBAR ── -->
+  <aside class="sidebar">
+    <div class="sidebar-logo">
+      <span class="logo-leaf">🌿</span>
+      <div>
+        <div class="logo-title">FoodRescue</div>
+        <div class="logo-sub">Zero Waste Platform</div>
+      </div>
+    </div>
+
+    <nav class="sidebar-nav">
+      <a href="/" class="nav-item {% if request.path == '/' %}active{% endif %}">
+        <span class="nav-icon">◉</span> Dashboard
+      </a>
+      <a href="/donate" class="nav-item {% if request.path == '/donate' %}active{% endif %}">
+        <span class="nav-icon">🍱</span> Donate Food
+      </a>
+      <a href="/claim-food" class="nav-item {% if request.path == '/claim-food' %}active{% endif %}">
+        <span class="nav-icon">📦</span> Claim Food
+      </a>
+      <a href="/volunteers" class="nav-item {% if request.path == '/volunteers' %}active{% endif %}">
+        <span class="nav-icon">🙋</span> Volunteers
+      </a>
+      <a href="/rewards" class="nav-item {% if request.path == '/rewards' %}active{% endif %}">
+        <span class="nav-icon">🎁</span> Rewards
+      </a>
+    </nav>
+
+    <div class="sidebar-footer">
+      <div class="sidebar-footer-text">Reducing food waste,<br>one meal at a time.</div>
+    </div>
+  </aside>
+
+  <!-- ── MOBILE TOPBAR ── -->
+  <header class="topbar">
+    <button class="menu-toggle" onclick="toggleSidebar()" aria-label="Menu">☰</button>
+    <span class="topbar-title">🌿 FoodRescue</span>
+  </header>
+
+  <!-- ── MAIN CONTENT ── -->
+  <main class="page-content">
+    {% block content %}{% endblock %}
+  </main>
+
+  <!-- ── TOAST ── -->
+  <div class="toast" id="toast"></div>
+  <!-- ── SIDEBAR OVERLAY (mobile) ── -->
+  <div class="sidebar-overlay" id="sidebarOverlay" onclick="toggleSidebar()"></div>
+
+  <script src="{{ url_for('static', filename='js/app.js') }}"></script>
+  {% block scripts %}{% endblock %}
+</body>
+</html>

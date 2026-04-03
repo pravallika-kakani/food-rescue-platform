@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+{% block title %}Donate Food{% endblock %}
+
+{% block content %}
+<div class="page-header">
+  <div>
+    <h1 class="page-title">Donate Food</h1>
+    <p class="page-subtitle">List surplus food for collection by our volunteers</p>
+  </div>
+</div>
+
+<div class="form-page-layout">
+  <section class="card form-card">
+    <form action="/add_food" method="POST" id="donateForm">
+      <div class="form-grid-2">
+        <div class="form-group">
+          <label>Restaurant / Event Name</label>
+          <input type="text" name="donor" placeholder="e.g. Green Leaf Café" required>
+        </div>
+        <div class="form-group">
+          <label>Food Item</label>
+          <input type="text" name="food_item" placeholder="e.g. Vegetable Biryani" required>
+        </div>
+        <div class="form-group">
+          <label>Quantity</label>
+          <input type="text" name="quantity" placeholder="e.g. 10 portions" required>
+        </div>
+        <div class="form-group">
+          <label>Pickup Location</label>
+          <input type="text" name="location" placeholder="e.g. Banjara Hills, Hyd" required>
+        </div>
+      </div>
+      <button type="submit" class="btn btn-primary" id="donateBtn">
+        🌱 Submit Donation
+      </button>
+    </form>
+  </section>
+
+  <!-- Side tip card -->
+  <aside class="tip-card">
+    <div class="tip-icon">💡</div>
+    <h3>Tips for a good listing</h3>
+    <ul class="tip-list">
+      <li>Be specific about the food type and quantity</li>
+      <li>Add a nearby landmark in the location</li>
+      <li>Food should be safe for consumption</li>
+      <li>Perishable items are picked up within 2 hrs</li>
+    </ul>
+  </aside>
+</div>
+{% endblock %}

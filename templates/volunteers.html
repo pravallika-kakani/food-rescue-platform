@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+{% block title %}Volunteers{% endblock %}
+
+{% block content %}
+<div class="page-header">
+  <div>
+    <h1 class="page-title">Volunteers</h1>
+    <p class="page-subtitle">Our community of food rescue heroes</p>
+  </div>
+</div>
+
+<!-- Register -->
+<section class="card" style="margin-bottom:28px;">
+  <div class="card-header">
+    <h2 class="card-title">Register as Volunteer</h2>
+  </div>
+  <form action="/register" method="POST" style="display:flex;gap:14px;flex-wrap:wrap;align-items:flex-end;">
+    <div class="form-group" style="flex:1;min-width:200px;">
+      <label>Your Full Name</label>
+      <input type="text" name="name" placeholder="e.g. Aanya Sharma" required>
+    </div>
+    <button type="submit" class="btn btn-amber">✨ Register</button>
+  </form>
+</section>
+
+<!-- Leaderboard table -->
+<section class="card">
+  <div class="card-header">
+    <h2 class="card-title">Leaderboard</h2>
+  </div>
+  {% if volunteers %}
+  <div class="vol-table">
+    <div class="vol-table-head">
+      <span>Rank</span><span>Name</span><span>Points</span><span>Action</span>
+    </div>
+    {% for v in volunteers %}
+    <div class="vol-table-row">
+      <span class="rank-cell">
+        {% if loop.index == 1 %}🥇
+        {% elif loop.index == 2 %}🥈
+        {% elif loop.index == 3 %}🥉
+        {% else %}<span class="rank-plain">{{ loop.index }}</span>
+        {% endif %}
+      </span>
+      <span class="vol-name-cell">{{ v[1] }}</span>
+      <span><div class="pts-chip">{{ v[2] }} pts</div></span>
+      <span>
+        <a href="/rewards" class="btn-redeem-sm">🎁 Redeem</a>
+      </span>
+    </div>
+    {% endfor %}
+  </div>
+  {% else %}
+  <div class="empty-state">
+    <span>🙌</span>
+    <p>No volunteers yet. Be the first!</p>
+  </div>
+  {% endif %}
+</section>
+{% endblock %}
